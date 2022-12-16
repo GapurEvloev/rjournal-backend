@@ -2,12 +2,10 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { OutputBlockData } from '../dto/create-post.dto';
-import { UserEntity } from '../../user/entities/user.entity';
 
 @Entity('posts')
 export class PostEntity {
@@ -21,7 +19,7 @@ export class PostEntity {
   body: OutputBlockData[];
 
   @Column({ default: 0 })
-  views: number;
+  views?: number;
 
   @Column({ nullable: true })
   tags?: string;

@@ -20,14 +20,8 @@ export class PostEntity {
   @Column({ type: 'jsonb' })
   body: OutputBlockData[];
 
-  // @Column()
-  // description: string;
-  //
-  // @ManyToOne(() => UserEntity, { eager: true })
-  // user: UserEntity;
-  //
-  // @Column({ default: 0 })
-  // views: number;
+  @Column({ default: 0 })
+  views: number;
 
   @Column({ nullable: true })
   tags?: string;

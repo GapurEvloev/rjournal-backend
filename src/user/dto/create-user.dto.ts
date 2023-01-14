@@ -8,7 +8,7 @@ export class CreateUserDto {
 
   @IsEmail(undefined, { message: 'Wrong email' })
   @UniqueOnDatabase(UserEntity, {
-    message: 'Such a email already exists. Choose another.',
+    message: 'Such an email already exists. Choose another.',
   })
   email: string;
 

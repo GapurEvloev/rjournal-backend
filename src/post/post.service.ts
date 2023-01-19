@@ -69,16 +69,6 @@ export class PostService {
     return { items, total };
   }
 
-  // async findOne(id: number) {
-  //   const find = await this.repository.findOne({ where: { id } });
-  //
-  //   if (!find) {
-  //     throw new NotFoundException('Post not found');
-  //   }
-  //
-  //   return find;
-  // }
-
   async findOne(id: number) {
     await this.repository
       .createQueryBuilder('posts')
@@ -119,7 +109,7 @@ export class PostService {
       body: dto.body,
       tags: dto.tags,
       user: { id: userId },
-      // description: firstParagraph || '',
+      description: firstParagraph || '',
     });
   }
 

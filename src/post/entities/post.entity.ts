@@ -19,8 +19,8 @@ export class PostEntity {
   @Column({ type: 'jsonb' })
   body: OutputBlockData[];
 
-  // @Column()
-  // description: string;
+  @Column()
+  description: string;
 
   @ManyToOne(() => UserEntity, { eager: true })
   user: UserEntity;

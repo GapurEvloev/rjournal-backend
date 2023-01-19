@@ -23,7 +23,7 @@ export class PostController {
   @Post()
   create(@User() userId: number, @Body() createPostDto: CreatePostDto) {
     console.log(userId)
-    // return this.postService.create(createPostDto, userId);
+    return this.postService.create(createPostDto, userId);
   }
 
   @UseGuards(JwtAuthGuard)

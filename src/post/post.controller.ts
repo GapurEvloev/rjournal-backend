@@ -22,7 +22,6 @@ export class PostController {
   @UseGuards(JwtAuthGuard)
   @Post()
   create(@User() userId: number, @Body() createPostDto: CreatePostDto) {
-    console.log(userId)
     return this.postService.create(createPostDto, userId);
   }
 
@@ -36,9 +35,10 @@ export class PostController {
     return this.postService.update(+id, updatePostDto, userId);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.postService.remove(+id);
+  remove(@User() userId: number, @Param('id') id: string) {
+    return this.postService.remove(+id, userId);
   }
 
   @Get()

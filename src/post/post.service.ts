@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -37,6 +41,8 @@ export class PostService {
 
   async search(dto: SearchPostDto) {
     const qb = this.repository.createQueryBuilder('p');
+
+    qb.leftJoinAndSelect('p.user', 'user');
 
     qb.limit(dto.limit || 0);
     qb.take(dto.take || 10);
@@ -98,7 +104,7 @@ export class PostService {
     const find = await this.repository.findOne(+id);
 
     if (!find) {
-      throw new NotFoundException('Статья не найдена');
+      throw new NotFoundException('Article not found.');
     }
 
     const firstParagraph = dto.body.find((obj) => obj.type === 'paragraph')
@@ -113,11 +119,15 @@ export class PostService {
     });
   }
 
-  async remove(id: number) {
-    const find = await this.repository.findOne({ where: { id } });
+  async remove(id: number, userId: number) {
+    const find = await this.repository.findOne(+id);
 
     if (!find) {
-      throw new NotFoundException('Post not found');
+      throw new NotFoundException('Article not found.');
+    }
+
+    if (find.user.id !== userId) {
+      throw new ForbiddenException('No access to the article.');
     }
 
     return this.repository.delete(id);
